@@ -1,11 +1,15 @@
-import React from 'react'
-
-const page = () => {
+export default function About() {
   return (
-    <div className='flex min-h-screen items-center justify-center'>
-     <h1 className='text-3xl text-orange-600'> This is About page</h1>
-    </div>
-  )
-}
+    <main className="min-h-screen max-w-5xl mx-auto px-6 py-20">
+      <h1 className="text-4xl font-bold mb-6">
+        About Me
+      </h1>
 
-export default page
+      <p className="text-gray-400 text-lg leading-8">
+        I am a Software Engineer interested in web development,
+        coding and learning new technologies. I enjoy building
+        useful and user-friendly web applications.
+      </p>
+    </main>
+  );
+}
