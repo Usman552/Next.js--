@@ -41,7 +41,7 @@ export default function Home() {
         </form>
       </div>
       {weather && (
-        <div className="rounded-2xl bg-white/90 p-6 text-center shadow-xl w-full max-w-md my-4">
+        <div className="rounded-2xl bg-white/70 p-6 text-center shadow-xl w-full max-w-md my-4">
           <h2 className="text-3xl font-bold text-gray-800">{weather.name}</h2>
 
           <Image
