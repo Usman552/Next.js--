@@ -9,6 +9,17 @@ export const metadata: Metadata = {
   description: "Discover trending movies",
 };
 
+const themeInitScript = `
+(function() {
+  try {
+    var theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,6 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>
         <ThemeProvider>
           <SearchProvider>

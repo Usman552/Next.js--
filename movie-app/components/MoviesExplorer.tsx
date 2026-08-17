@@ -1,5 +1,5 @@
 "use client";
-
+import { getTrendingMovies, searchMovies } from "@/lib/tmdb";
 import { useEffect, useRef, useState } from "react";
 import { SearchX, TriangleAlert } from "lucide-react";
 import MovieCard from "@/components/MovieCard";
@@ -37,24 +37,17 @@ export default function MoviesExplorer({
       setError(null);
 
       try {
-        const url = query
-          ? `/api/movies?query=${encodeURIComponent(query)}`
-          : "/api/movies";
-
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || "Something went wrong.");
-        }
+        const data = query
+          ? await searchMovies(query)
+          : await getTrendingMovies();
 
         if (!cancelled) {
-          setMovies(data.results);
+          setMovies(data.results ?? []);
         }
       } catch (err) {
         if (!cancelled) {
           setError(
-            err instanceof Error ? err.message : "Something went wrong."
+            err instanceof Error ? err.message : "Something went wrong.",
           );
         }
       } finally {
@@ -117,9 +110,7 @@ export default function MoviesExplorer({
                   ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                   : "/no-poster.jpg"
               }
-              year={
-                movie.release_date ? movie.release_date.slice(0, 4) : "N/A"
-              }
+              year={movie.release_date ? movie.release_date.slice(0, 4) : "N/A"}
               rating={movie.vote_average}
             />
           ))}

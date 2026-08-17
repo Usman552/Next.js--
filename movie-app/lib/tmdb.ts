@@ -3,7 +3,7 @@ import type { MovieResponse, MovieDetails } from "@/types/movie";
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 async function tmdbFetch<T>(path: string): Promise<T> {
-  const token = process.env.TMDB_ACCESS_TOKEN;
+const token = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
 
   const res = await fetch(`${TMDB_BASE_URL}${path}`, {
     headers: {

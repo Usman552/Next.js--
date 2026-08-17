@@ -19,7 +19,7 @@ export default function MovieCard({
 }: MovieCardProps) {
   return (
     <Link
-      href={`/movie/${id}`}
+     href={`/movie?id=${id}`}
       className="group block overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-lg"
     >
       <div className="relative aspect-[2/3] overflow-hidden bg-muted">
