@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" role="img" aria-label="Soylent">
+  <g fill="currentColor" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <path d="M14 12 C11 15 11 21 14 24 C18 28 26 24 26 20 C26 16 18 12 14 12 Z" fill="none" stroke="currentColor" stroke-width="2.2"/>
+    <text x="42" y="26" font-size="17" font-weight="700" letter-spacing="0.5">SOYLENT</text>
+  </g>
+</svg>

@@ -1,0 +1,73 @@
+// Nexora Prisma schema
+//
+// Owned by the `persistence` capability spec. Any column additions must remain
+// additive (see the "Extensibility contract" scenario). We deliberately DO NOT
+// store passwords, OIDC access tokens, refresh tokens, ID tokens, or client
+// secrets — those live in the identity provider (Keycloak) only.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Application-level user record. Linked to one-or-more identity providers via
+// the Account table. `id` is stable across renames and email changes.
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  name      String?
+  image     String?
+  // bcrypt hash for Credentials-provider users only. OAuth-only users have
+  // password = null. NEVER store plaintext here.
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+
+  @@map("users")
+}
+
+// Per-provider identity link. `(provider, providerAccountId)` uniquely
+// identifies an external identity (for Keycloak this is `provider="keycloak"`
+// and `providerAccountId=<sub-claim>`).
+//
+// NOTE: no columns for access_token / refresh_token / id_token / client_secret.
+// If we later need those (e.g. to call Keycloak-protected APIs on the user's
+// behalf), add them by an additive migration — the primary key and unique
+// constraint below must never change.
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  provider          String
+  providerAccountId String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+// Server-side session record. Ships even when the primary session strategy is
+// JWT-in-cookie, so we can flip to DB-backed sessions in a config change
+// without a migration.
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}

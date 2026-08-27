@@ -1,0 +1,32 @@
+# Local development infrastructure for Nexora.
+#
+# Nexora uses Auth.js with Google + GitHub OAuth and Email/Password. None of
+# those require a local identity provider — only PostgreSQL for persistence.
+#
+# Usage:
+#   docker compose up -d postgres         # start Postgres
+#   docker compose logs -f postgres       # tail logs
+#   docker compose down                   # stop, preserve volumes
+#   docker compose down -v                # stop, DESTROY volumes
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: nexora-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: nexora
+      POSTGRES_PASSWORD: nexora
+      POSTGRES_DB: nexora
+    volumes:
+      - nexora-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexora -d nexora"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  nexora-postgres-data:
