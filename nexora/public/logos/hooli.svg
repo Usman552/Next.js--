@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" role="img" aria-label="Hooli">
+  <g fill="currentColor" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <circle cx="14" cy="20" r="6" fill="currentColor"/>
+    <circle cx="26" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/>
+    <text x="42" y="26" font-size="18" font-weight="700" letter-spacing="0.5">Hooli</text>
+  </g>
+</svg>

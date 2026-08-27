@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" role="img" aria-label="Wayne Enterprises">
+  <g fill="currentColor" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <path d="M8 24 L20 12 L32 24 L26 24 L20 18 L14 24 Z" fill="currentColor"/>
+    <text x="42" y="26" font-size="14" font-weight="600" letter-spacing="0.5">Wayne Enterprises</text>
+  </g>
+</svg>
